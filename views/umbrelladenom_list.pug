@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1= title 
+    if umbrelladenom_list.length 
+        ul 
+            each umbrelladenom in umbrelladenom_list 
+                li 
+                    a(href=umbrelladenom.url) #{umbrelladenom.name}
+
+    else 
+        p There are no branches.

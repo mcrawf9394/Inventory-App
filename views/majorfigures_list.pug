@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1= title 
+    if majorfigures_list.length 
+        ul 
+            each majorfigure in majorfigures_list 
+                li 
+                    a(href=majorfigure.url) #{majorfigure.name}
+
+    else 
+        p There are no major figures.

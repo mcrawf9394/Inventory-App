@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1= title 
+    if denomination_list.length 
+        ul 
+            each denomination in denomination_list 
+                li 
+                    a(href=denomination.url) #{denomination.name}
+
+    else 
+        p There are no denominations
