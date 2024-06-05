@@ -1,0 +1,29 @@
+extends layout 
+
+block content 
+    h1= title 
+
+    form(method="post")
+        div
+            label(for='name') Name: 
+            input(name='name' type='text' required)
+        div 
+            label(for='majorfigures') Major Figure: 
+            select(name="majorfigures" required)
+                option(value="" selected) --choose a major figure-- 
+                for figures in majorfigures
+                    option(value=figures._id) #{figures.name}
+        div
+            label(for='Summary') Summary: 
+            input(name='Summary' type='text' require)
+        div 
+            label(for='UmbrellaDenom') Branches: 
+            select(name='UmbrellaDenom' required)
+                option(value='' selected) --choose a branch--
+                for branch in umbrelladenoms
+                    option(value=branch._id)  #{branch.name}
+        button(type="submit") Submit
+    if errors 
+        ul 
+            for error in errors
+             li= error.msg
