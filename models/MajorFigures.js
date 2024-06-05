@@ -15,18 +15,18 @@ MajorFiguresSchema.virtual("name").get(function () {
     return fullname
 })
 MajorFiguresSchema.virtual("url").get(function () {
-    return `/catalog/MajorFigures/${this._id}`
+    return `/catalog/major-figures/${this._id}`
 })
 MajorFiguresSchema.virtual("BirthDate").get(function () {
     if (this.date_of_birth) {
-        return DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATETIME_MED)
+        return DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED)
     } else {
         return ''
     }
 })
 MajorFiguresSchema.virtual("DeathDate").get(function () {
     if (this.date_of_death) {
-        return DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATETIME_MED)
+        return DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED)
     } else {
         return ''
     }

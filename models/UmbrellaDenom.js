@@ -5,6 +5,6 @@ const UmbrellaDenomSchema = new Schema ({
     summary: { type: String, require: true}
 })
 UmbrellaDenomSchema.virtual("url").get(function () {
-    return `/catalog/UmbrellaDenom/${this._id}`
+    return `/catalog/branch/${this._id}`
 })
 module.exports = mongoose.model('UmbrellaDenom', UmbrellaDenomSchema)

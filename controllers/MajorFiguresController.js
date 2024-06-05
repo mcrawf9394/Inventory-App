@@ -8,3 +8,11 @@ exports.majorfigures_list = asyncHandler(async (req, res, next) => {
         majorfigures_list: allMajorFigures
     })
 })
+exports.majorfigures_detail = asyncHandler(async (req, res, next) => {
+    const Majorfigure = await majorfigures.findById(req.params.id).exec()
+    res.render("majorfigures_detail", {
+        title: Majorfigure.name,
+        dob: Majorfigure.BirthDate,
+        dod: Majorfigure.DeathDate
+    })
+})
