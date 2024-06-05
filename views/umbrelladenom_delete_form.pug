@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    if usedIn.length > 0
+        h1= `${title} can not be deleted as ${usedIn[0].name} is a denomination inside of ${title}`
+        a(href=usedIn[0].url)=`${usedIn[0].name}` 
+    else
+        h1= `Delete ${title}`
+        p= summary  
+        form(method="post")
+            input(type='hidden' name='branchId' value=`${id}`)
+            button(type="submit") Delete 

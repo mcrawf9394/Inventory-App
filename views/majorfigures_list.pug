@@ -7,6 +7,8 @@ block content
             each majorfigure in majorfigures_list 
                 li 
                     a(href=majorfigure.url) #{majorfigure.name}
+        a(href="/catalog/major-figures/add") Add Major Figure
 
     else 
         p There are no major figures.
+        a(href="/catalog/major-figures/add") Add Major Figure

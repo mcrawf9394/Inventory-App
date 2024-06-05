@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    if usedIn.length > 0
+        h1= `${title} can not be deleted as ${usedIn[0].name} uses this person as their Major Figure`
+        a(href=usedIn[0].url)=`${usedIn[0].name}` 
+    else
+        h1= `Delete ${title}`
+        h2= `${birthdate} - ${deathdate}`
+        form(method="post")
+            input(type='hidden' name='figureId' value=`${id}`)
+            button(type="submit") Delete 

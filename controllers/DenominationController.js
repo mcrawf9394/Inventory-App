@@ -22,7 +22,8 @@ exports.denomination_detail = asyncHandler(async (req, res, next) => {
         title: denomination.name,
         summary: denomination.Summary,
         MajorFigure: majorfigure.name,
-        branch: umbrelladenom.name
+        branch: umbrelladenom.name,
+        id: req.params.id
     }) 
 })
 exports.denomination_add_get = asyncHandler(async (req, res, next) => {
@@ -78,3 +79,17 @@ exports.denomination_add_post = [
         }
     })
 ]
+exports.denomination_delete_get = asyncHandler(async (req, res, next) => {
+    const [denomination] = await Promise.all([
+        Denomination.findById(req.params.id).exec()
+    ])
+    res.render('denomination_delete_form', {
+        title: `Delete ${denomination.name}`,
+        summary: denomination.Summary,
+        id: req.params.id
+    })
+})
+exports.denomination_delete_post = asyncHandler(async (req, res, next) => {
+    await Denomination.findByIdAndDelete(req.body.DenomId)
+    res.redirect('/catalog/denomination')
+})

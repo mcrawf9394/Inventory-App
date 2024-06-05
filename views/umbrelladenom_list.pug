@@ -7,6 +7,7 @@ block content
             each umbrelladenom in umbrelladenom_list 
                 li 
                     a(href=umbrelladenom.url) #{umbrelladenom.name}
-
+        a(href="/catalog/branch/add") Add Branch 
     else 
         p There are no branches.
+        a(href="/catalog/branch/add") Add Branch
