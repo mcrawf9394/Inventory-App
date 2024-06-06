@@ -69,3 +69,9 @@ exports.umbrelladenom_delete_post = asyncHandler(async (req, res, next) => {
     await UmbrellaDenom.findByIdAndDelete(req.body.branchId)
     res.redirect('/catalog/branch')
 })
+exports.umbrelladenom_update_get = asyncHandler(async (req, res, next) => {
+    
+})
+exports.umbrelladenom_update_post = asyncHandler(async (req, res, next) => {
+    
+})

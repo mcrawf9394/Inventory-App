@@ -93,3 +93,70 @@ exports.denomination_delete_post = asyncHandler(async (req, res, next) => {
     await Denomination.findByIdAndDelete(req.body.DenomId)
     res.redirect('/catalog/denomination')
 })
+exports.denomination_update_get = asyncHandler(async (req, res, next) => {
+  const currentDenom = await Denomination.findById(req.params.id).exec()
+  const [AllMajorFigures, umbrellaDenoms, currentFigure, currentBranch] = await Promise.all([
+    MajorFigures.find({_id: { $not: {$eq: currentDenom.MajorFigures}}}).sort({last_name: 1}).exec(),
+    UmbrellaDenom.find({_id: { $not: {$eq: currentDenom.UmbrellaDenom}}}).sort({name:1}).exec(),
+    MajorFigures.findById(currentDenom.MajorFigures).exec(),
+    UmbrellaDenom.findById(currentDenom.UmbrellaDenom).exec()
+  ])
+  res.render('denomination_update_form', {
+    title: `Update ${currentDenom.name}`,
+    major_figures: AllMajorFigures,
+    umbrella_denoms: umbrellaDenoms,
+    currentFigure: currentFigure,
+    denomination: currentDenom,
+    currentBranch: currentBranch
+  })  
+})
+exports.denomination_update_post = [
+    body("name", "Must provide a name")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    body("majorfigures", "Must have a Major Figure")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    body("Summary", "Must Provide a summary")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    body("UmbrellaDenom", "Must provide a branch")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            const currentDenom = await Denomination.findById(req.params.id).exec()
+            const [AllMajorFigures, umbrellaDenoms, currentFigure, currentBranch] = await Promise.all([
+                MajorFigures.find({_id: { $not: {$eq: currentDenom.MajorFigures}}}).sort({last_name: 1}).exec(),
+                UmbrellaDenom.find({_id: { $not: {$eq: currentDenom.UmbrellaDenom}}}).sort({name:1}).exec(),
+                MajorFigures.findById(currentDenom.MajorFigures).exec(),
+                UmbrellaDenom.findById(currentDenom.UmbrellaDenom).exec()
+            ])
+            res.render('denomination_update_form', {
+                title: `Update ${currentDenom.name}`,
+                major_figures: AllMajorFigures,
+                umbrella_denoms: umbrellaDenoms,
+                currentFigure: currentFigure,
+                denomination: currentDenom,
+                currentBranch: currentBranch,
+                errors: errors
+            })  
+        } else {
+            const denom = new Denomination({
+                name: req.body.name,
+                MajorFigures: req.body.majorfigures,
+                Summary: req.body.Summary,
+                UmbrellaDenom: req.body.UmbrellaDenom,
+                _id: req.params.id
+            })
+            await Denomination.findByIdAndUpdate(req.params.id, denom, {})
+            let id = req.params.id
+            res.redirect(`/catalog/denomination/${id}`)
+        }
+    })
+]

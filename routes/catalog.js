@@ -29,4 +29,12 @@ router.get('/major-figures/:id/delete', MajorFiguresController.majorfigures_dele
 router.post('/major-figures/:id/delete', MajorFiguresController.majorfigures_delete_post)
 router.get('/branch/:id/delete', UmbrellaDenomController.umbrelladenom_delete_get)
 router.post('/branch/:id/delete', UmbrellaDenomController.umbrelladenom_delete_post)
+
+router.get('/denomination/:id/update', DenominationController.denomination_update_get)
+router.post('/denomination/:id/update', DenominationController.denomination_update_post)
+router.get('/major-figures/:id/update', MajorFiguresController.majorfigures_update_get)
+router.post('/major-figures/:id/update', MajorFiguresController.majorfigures_update_post)
+router.get('/branch/:id/update', UmbrellaDenomController.umbrelladenom_update_get)
+router.post('/branch/:id/update', UmbrellaDenomController.umbrelladenom_update_post)
+
 module.exports = router;

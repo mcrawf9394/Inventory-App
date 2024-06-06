@@ -1,0 +1,20 @@
+extends layout 
+
+block content
+    h1= title
+    form(method="post")
+        label(for='name')= 'Denomination Name' 
+        input(name='name' type='text' value=denomination.name) 
+        label(for='majorfigures') Major Figure
+        select(name="majorfigures")
+            option(value=denomination.MajorFigures selected)=currentFigure.name 
+            for figures in major_figures 
+                option(value=figures._id) #{figures.name} 
+        label(for='Summary')= 'Summary'
+        input(name='Summary' type='text' value=denomination.Summary)
+        label(for='UmbrellaDenom')= 'Branch'
+        select(name='UmbrellaDenom')
+            option(value=denomination.UmbrellaDenom selected)=currentBranch.name 
+            for branch in umbrella_denoms
+                option(value=branch._id) #{branch.name} 
+        button(type="submit") Submit
