@@ -70,8 +70,40 @@ exports.umbrelladenom_delete_post = asyncHandler(async (req, res, next) => {
     res.redirect('/catalog/branch')
 })
 exports.umbrelladenom_update_get = asyncHandler(async (req, res, next) => {
-    
+    const currentBranch = await UmbrellaDenom.findById(req.params.id).exec()
+    res.render('umbrelladenom_update_form', {
+        title: `Update ${currentBranch.name}`,
+        name: currentBranch.name,
+        summary: currentBranch.summary
+    })
 })
-exports.umbrelladenom_update_post = asyncHandler(async (req, res, next) => {
-    
-})
+exports.umbrelladenom_update_post = [
+    body("name", "Name of the branch is required")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    body("summary", "Summary of the branch is required")
+        .trim()
+        .isLength({min:1})
+        .escape(),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            const currentBranch = await UmbrellaDenom.findById(req.params.id).exec()
+            res.render('umbrelladenom_update_form', {
+                title: `Update ${currentBranch.name}`,
+                name: currentBranch.name,
+                summary: currentBranch.summary,
+                errors: errors.array()
+            })
+        } else {
+            const newBranch = new UmbrellaDenom({
+                name: req.body.name,
+                summary: req.body.summary,
+                _id: req.params.id
+            })
+            await UmbrellaDenom.findByIdAndUpdate(req.params.id, newBranch, {})
+            res.redirect(`/catalog/branch/${req.params.id}`)
+        }
+    })
+]
