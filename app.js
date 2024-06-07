@@ -13,7 +13,7 @@ const mongoose = require("mongoose")
 const {callTracker} = require("assert")
 mongoose.set("strictQuery", false)
 const dev_db_url = "mongodb+srv://Admin:hde5ccrsjEfCagq1@cluster0.2xc9jlt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-const mongoDb = process.env.MONGODB_URI || dev_db_url;
+const mongoDb = dev_db_url;
 main().catch((err) => console.log(err))
 async function main () {
   await mongoose.connect(mongoDb)
