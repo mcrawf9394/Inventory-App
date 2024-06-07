@@ -4,9 +4,9 @@ block content
     h1= title 
 
     form(method="post")
-        label(for="name") 
+        label(for="name") Name
         input(name="name" type="text" required)
-        label(for="summary")
+        label(for="summary") Summary
         input(name="summary" type="text" required)
         button(type="submit") Submit
     if errors 
